@@ -18,12 +18,13 @@ namespace limaApi.Repositories
                .Where(x => x.Venda.Count() > 0).ToList()
                .Select(x => new PersonModel
                {
+                   Id = x.Id,
                    Nome = x.Nome,
                    Idade = x.Idade,
                    CidadeNome = x.Cidade.Cidade1,
                    EstadoNome = x.Cidade.Estado.Sigla,
                    Genero = x.Genero,
-                   Pontos = x.Venda.Count() * 12 + x.Venda.Sum(r => r.Produto.Valor) * 24
+                   Pontos = x.Venda.Count() * 12 + x.Venda.Sum(v => v.Produto.Valor*v.Quantidade) * 24 
                }).OrderByDescending(x => x.Pontos).ToList();
 
             return lista;
